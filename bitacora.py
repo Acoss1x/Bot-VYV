@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.firefox import GeckoDriverManager
 
-# === CONFIGURACIÓN === #
+
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1403165163829592125/JwA3vaW5E7hRbqlge4gWSAZz4ABvPvgFYxi-e57jWROSMc5RMUT4sG9lfXWMI1V9Oucs"  # <-- REEMPLAZA ESTO
 PORTAFOLIO = {
     "PYPL": 72.0,
@@ -55,7 +55,7 @@ FRASES_MOTIVACIONALES = [
     "Lo importante no es lo que ganas hoy, sino lo que acumulas a lo largo de los años."
 ]
 
-# === FUNCIONES === #
+
 def obtener_datos_accion(ticker):
     hoy = datetime.datetime.now().date()
     hace_5_dias = hoy - datetime.timedelta(days=7)
@@ -64,7 +64,7 @@ def obtener_datos_accion(ticker):
 
 def generar_grafico_tradingview(ticker):
     symbol = f"NASDAQ:{ticker}"
-    url = f"https://www.tradingview.com/chart/?symbol={symbol}&interval=240"  # Temporalidad 4H
+    url = f"https://www.tradingview.com/chart/?symbol={symbol}&interval=240"  
 
     firefox_options = Options()
     firefox_options.add_argument("--headless")
@@ -74,7 +74,7 @@ def generar_grafico_tradingview(ticker):
     driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=firefox_options)
     driver.get(url)
 
-    # Intentar cerrar el popup de login si aparece
+
     try:
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "tv-signin-dialog__close"))
@@ -83,9 +83,9 @@ def generar_grafico_tradingview(ticker):
     except:
         print(f"[i] No apareció popup de login para {ticker}")
 
-    time.sleep(12)  # Esperar que cargue el gráfico
+    time.sleep(12)  
      
-     # Eliminar popup de Google (Google One Tap y similares)
+
     try:
         driver.execute_script("""
             const popup = document.getElementById('credential_picker_container');
@@ -116,7 +116,6 @@ def enviar_a_discord(mensaje, archivos):
         f.close()
     return response.status_code
 
-# === PROCESO PRINCIPAL === #
 bitacora = []
 graficos = []
 hoy_str = datetime.datetime.now().strftime("%d/%m/%Y")
@@ -143,7 +142,7 @@ mensaje = f"📈 **Bitácora diaria – {hoy_str}**\n\n"
 mensaje += f"🌟 *\"{frase}\"*\n\n"
 mensaje += "\n".join(bitacora)
 
-# Enviar primer mensaje con texto y primera imagen
+
 primer_imagen = graficos[0] if graficos else None
 resto_imagenes = graficos[1:] if len(graficos) > 1 else []
 
