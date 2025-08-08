@@ -1,0 +1,8 @@
+services:
+  - type: cron
+    name: bot-bitacora-vyv
+    runtime: python
+    repo: https://github.com/TU_USUARIO/TU_REPO
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./start.sh
+    schedule: "30 21 * * 1-5"  # Ejecuta de lunes a viernes a las 4:30 p.m. Colombia (21:30 UTC)
