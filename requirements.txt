@@ -1,4 +1,3 @@
 requests
 yfinance
-selenium
-webdriver-manager
+mplfinance
